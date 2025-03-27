@@ -12,9 +12,9 @@ class ReadyScreen extends ConsumerWidget {
     final highScoreAsyncValue = ref.watch(highScoreProvider);
 
     return Scaffold(
-      body: Container(
+      body: Container( 
         width: double.infinity,
-        height: double.infinity,
+        height: double.infinity, 
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,

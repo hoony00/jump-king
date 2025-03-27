@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
@@ -11,6 +12,7 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
   late List<Obstacle> obstacles;
   late TextComponent scoreText;
   late TextComponent highScoreText;
+  late AudioPool jumpSoundPool;
   bool isGameOver = false;
   double obstacleSpawnTimer = 0;
 
@@ -37,6 +39,12 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
 
   @override
   Future<void> onLoad() async {
+    // 점프 사운드 로드
+    jumpSoundPool = await AudioPool.create(
+      source: AssetSource('sounds/jump.mp3'),
+      maxPlayers: 3,
+    );
+
     // 배경 설정
     add(
       RectangleComponent(
@@ -165,7 +173,7 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
   void spawnObstacle() {
     // 장애물의 높이가 증가할 때 위로도 커지도록 y좌표 조정
     final obstacleY = size.y - groundHeight - 30 - (obstacleHeight - 40) / 2;
-
+    
     final obstacle = Obstacle(
       position: Vector2(size.x, obstacleY),
       size: Vector2(obstacleSize, obstacleHeight),
@@ -222,6 +230,8 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
   void playerJump() {
     if (!isGameOver) {
       player.jump();
+      // 점프 사운드 재생
+      jumpSoundPool.start();
     }
   }
 
