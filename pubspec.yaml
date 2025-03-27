@@ -1,0 +1,44 @@
+name: jump_adventure
+description: "A new Flutter project."
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.6.2
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  firebase_core: ^2.27.1
+  firebase_database: ^10.4.10
+
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+  flutter_riverpod: ^2.5.1
+
+  audioplayers: ^5.2.1
+
+  flame: ^1.16.0
+  flame_audio: ^2.1.8
+
+  flutter_svg: ^2.0.9
+  shared_preferences: ^2.2.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+
+flutter:
+  assets:
+    - assets/images/
+
+  uses-material-design: true
+
