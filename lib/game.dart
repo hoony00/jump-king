@@ -13,6 +13,16 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
   late TextComponent highScoreText;
   bool isGameOver = false;
   double obstacleSpawnTimer = 0;
+
+  // 스피드업 팝업
+  bool speedUpVisible = false;
+  double speedUpTimer = 0;
+
+  // Speed and size thresholds
+  double obstacleSpeed = 200.0;
+  double obstacleSize = 40.0;
+  double obstacleHeight = 40.0;
+
   static const double obstacleSpawnInterval = 2.0;
   static const double groundHeight = 100.0;
   static const double playerStartX = 50.0;
@@ -101,7 +111,7 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
     // 장애물 이동 및 제거, 점수 증가
     final obstaclesToRemove = <Obstacle>[];
     for (var obstacle in obstacles) {
-      obstacle.position.x -= 200 * dt;
+      obstacle.position.x -= obstacleSpeed * dt; // Update speed dynamically
 
       // 장애물이 플레이어를 통과했을 때 점수 증가
       if (!obstacle.isScored && obstacle.position.x < playerStartX - 30) {
@@ -113,6 +123,27 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
       // 화면 밖으로 나간 장애물 제거
       if (obstacle.position.x < -50) {
         obstaclesToRemove.add(obstacle);
+      }
+    }
+
+    // 점수에 따라 장애물 속도 및 크기 변경
+    obstacleSpeed = 200.0 + (score * 10);  // Smoothly increase speed
+    obstacleSize = 50.0 + (score * 5);     // Increase width with score
+    obstacleHeight = 50.0 + (score * 5);   // Increase height with score
+
+    // If speed has changed, display "Speed Up!" message for 1.5 seconds
+    if (score >= 2 && score < 5 && !speedUpVisible) {
+      speedUpVisible = true;
+      addSpeedUpMessage();
+    }else if(score == 10){
+      speedUpVisible = false;
+    }
+
+    if (speedUpVisible) {
+      speedUpTimer += dt;
+      if (speedUpTimer >= 1.5) {
+        speedUpVisible = false;
+        speedUpTimer = 0;
       }
     }
 
@@ -132,8 +163,12 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
   }
 
   void spawnObstacle() {
+    // 장애물의 높이가 증가할 때 위로도 커지도록 y좌표 조정
+    final obstacleY = size.y - groundHeight - 30 - (obstacleHeight - 40) / 2;
+
     final obstacle = Obstacle(
-      position: Vector2(size.x, size.y - groundHeight - 30),
+      position: Vector2(size.x, obstacleY),
+      size: Vector2(obstacleSize, obstacleHeight),
     );
     add(obstacle);
     obstacles.add(obstacle);
@@ -146,7 +181,7 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
     if (score > highScore) {
       highScore = score;
       highScoreText.text = 'High Score: $highScore';
-      
+
       // 최고 점수 저장
       final prefs = await SharedPreferences.getInstance();
       await prefs.setInt(highScoreKey, highScore);
@@ -204,5 +239,20 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
     } else {
       playerJump();
     }
+  }
+
+  void addSpeedUpMessage() {
+    final speedUpText = TextComponent(
+      text: 'Speed Up!',
+      position: Vector2(size.x / 2 - 100, size.y / 2 - 50),
+      textRenderer: TextPaint(
+        style: const TextStyle(
+          fontSize: 32,
+          fontWeight: FontWeight.bold,
+          color: Colors.yellow,
+        ),
+      ),
+    );
+    add(speedUpText);
   }
 }
