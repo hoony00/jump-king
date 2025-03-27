@@ -1,31 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:jump_adventure/screens/game_screen.dart';
-import 'package:jump_adventure/services/local_db_service.dart';
+import 'package:jump_adventure/screens/s_ready.dart';
+import 'package:jump_adventure/services/local_storage.dart';
 
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // Firebase 초기화
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,  
-  ); 
-    
-  // Hive 초기화 
-  await Hive.initFlutter();
-  
-  // 로컬 DB 서비스 초기화  
-  final localDBService = LocalDBService();  
-  await localDBService.init();
-   
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  // 로컬 데이터베이스 초기화
+  await LocalStorage.instance.init();
+
   runApp(
     const ProviderScope(
       child: MyApp(),
-    ),  
+    ),
   );
 }
 
@@ -41,7 +36,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const GameScreen(),
+      home: const ReadyScreen(),
     );
   }
 }

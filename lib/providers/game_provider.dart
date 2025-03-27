@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../widgets/body/w_game.dart';  // JumpGame import
+import '../game.dart';
+import '../services/local_storage.dart';
 
 /// 게임 상태를 나타내는 Enum
 /// - `initial`: 게임 시작 전 상태
@@ -32,11 +33,26 @@ class GameNotifier extends Notifier<JumpGame> {
   GameState gameState = GameState.initial;
   PlayerState playerState = PlayerState.idle;
   int score = 0;
+  int highScore = 0;
 
   @override
   JumpGame build() {
-    final game = JumpGame();
+    // 초기 최고 점수는 0으로 설정
+    highScore = 0;
+    
+    // JumpGame을 초기화
+    final game = JumpGame(initialHighScore: highScore);
+    
+    // 비동기로 최고 점수를 로드
+    _loadHighScore();
+    
     return game;
+  }
+
+  Future<void> _loadHighScore() async {
+    final loadedHighScore = await LocalStorage.instance.readInt(key: 'highScore') ?? 0;
+    highScore = loadedHighScore;
+    state = JumpGame(initialHighScore: highScore);
   }
 
   void playerJump() {

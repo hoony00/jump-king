@@ -1,14 +1,14 @@
-#Thu Mar 27 14:45:58 KST 2025
+#Thu Mar 27 16:39:08 KST 2025
 path.4=classes2.dex
 path.3=1/classes.dex
 path.2=0/classes.dex
 path.1=0/classes.dex
 path.0=classes.dex
-base.4=/Users/sanghoon/StudioProjects/jump_king/build/app/intermediates/dex/debug/mergeExtDexDebug/classes2.dex
-base.3=/Users/sanghoon/StudioProjects/jump_king/build/app/intermediates/dex/debug/mergeProjectDexDebug/1/classes.dex
-base.2=/Users/sanghoon/StudioProjects/jump_king/build/app/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
-base.1=/Users/sanghoon/StudioProjects/jump_king/build/app/intermediates/dex/debug/mergeLibDexDebug/0/classes.dex
-base.0=/Users/sanghoon/StudioProjects/jump_king/build/app/intermediates/dex/debug/mergeExtDexDebug/classes.dex
+base.4=/Users/sanghoon/AndroidStudioProjects/jump_king/build/app/intermediates/dex/debug/mergeExtDexDebug/classes2.dex
+base.3=/Users/sanghoon/AndroidStudioProjects/jump_king/build/app/intermediates/dex/debug/mergeProjectDexDebug/1/classes.dex
+base.2=/Users/sanghoon/AndroidStudioProjects/jump_king/build/app/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
+base.1=/Users/sanghoon/AndroidStudioProjects/jump_king/build/app/intermediates/dex/debug/mergeLibDexDebug/0/classes.dex
+base.0=/Users/sanghoon/AndroidStudioProjects/jump_king/build/app/intermediates/dex/debug/mergeExtDexDebug/classes.dex
 renamed.3=classes4.dex
 renamed.2=classes3.dex
 renamed.1=classes2.dex
