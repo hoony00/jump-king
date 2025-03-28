@@ -32,6 +32,22 @@ class ControlsWidget extends ConsumerWidget {
               color: Colors.white,
             ),
           ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            style: ElevatedButton.styleFrom(
+              shape: const CircleBorder(),
+              padding: const EdgeInsets.all(12),
+              backgroundColor: Colors.red,
+              elevation: 5,
+            ),
+            child: const Icon(
+              Icons.home,
+              size: 24,
+              color: Colors.white,
+            ),
+          ),
           // 엎드리기/일어서기 버튼
           ElevatedButton(
             onPressed: () {
@@ -50,6 +66,9 @@ class ControlsWidget extends ConsumerWidget {
               color: Colors.white,
             ),
           ),
+
+
+
         ],
       ),
     );

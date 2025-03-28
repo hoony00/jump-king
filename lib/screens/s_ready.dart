@@ -12,14 +12,13 @@ class ReadyScreen extends ConsumerWidget {
     final highScoreAsyncValue = ref.watch(highScoreProvider);
 
     return Scaffold(
-      body: Container( 
+      body: Container(
         width: double.infinity,
-        height: double.infinity, 
+        height: double.infinity,
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xFF87CEEB), Color(0xFF4A90E2)],
+          image: DecorationImage(
+            image: AssetImage('assets/images/img.png'),
+            fit: BoxFit.contain,  // 이미지가 화면을 꽉 채우도록 설정
           ),
         ),
         child: SafeArea(
@@ -28,47 +27,34 @@ class ReadyScreen extends ConsumerWidget {
             children: [
               const Spacer(),
               // 게임 타이틀
-              const Text(
-                'Jump King',
-                style: TextStyle(
-                  fontSize: 48,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  shadows: [
-                    Shadow(
-                      offset: Offset(2, 2),
-                      blurRadius: 4,
-                      color: Colors.black26,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 40),
+
+              const SizedBox(height: 100),
               // 최고 점수 표시
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(20),
+
                 ),
                 child: Column(
                   children: [
-                    const Text(
+                     Text(
                       'High Score',
                       style: TextStyle(
                         fontSize: 24,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w800,
                       ),
                     ),
                     const SizedBox(height: 8),
                     highScoreAsyncValue.when(
                       data: (highScore) => Text(
                         highScore.toString(),
-                        style: const TextStyle(
+                        style:  TextStyle(
                           fontSize: 48,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                          color: Colors.purpleAccent,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       loading: () => const CircularProgressIndicator(),
@@ -86,11 +72,8 @@ class ReadyScreen extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 32),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => const GameScreen(),
-                      ),
-                    );
+
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const GameScreen()));
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
@@ -105,12 +88,13 @@ class ReadyScreen extends ConsumerWidget {
                     'Start Game',
                     style: TextStyle(
                       fontSize: 24,
+                      color: Colors.purpleAccent,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 22),
             ],
           ),
         ),

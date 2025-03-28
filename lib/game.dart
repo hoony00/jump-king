@@ -88,6 +88,10 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
     );
     add(highScoreText);
 
+
+
+
+
     // 플레이어 초기화
     player = Player(
       groundY: size.y - groundHeight - 50,
@@ -143,8 +147,11 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
     if (score >= 2 && score < 5 && !speedUpVisible) {
       speedUpVisible = true;
       addSpeedUpMessage();
-    }else if(score == 10){
-      speedUpVisible = false;
+
+      if(score == 5){
+        speedUpVisible = false;
+      }
+
     }
 
     if (speedUpVisible) {
@@ -173,7 +180,7 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
   void spawnObstacle() {
     // 장애물의 높이가 증가할 때 위로도 커지도록 y좌표 조정
     final obstacleY = size.y - groundHeight - 30 - (obstacleHeight - 40) / 2;
-    
+
     final obstacle = Obstacle(
       position: Vector2(size.x, obstacleY),
       size: Vector2(obstacleSize, obstacleHeight),
@@ -209,6 +216,10 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
         ),
       );
     } else {
+
+      // speedUp 제거
+      speedUpVisible = false;
+
       add(
         TextComponent(
           text: 'Game Over!\nTap to restart',

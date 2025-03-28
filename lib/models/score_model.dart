@@ -1,6 +1,5 @@
-import 'package:hive/hive.dart';
 
-class ScoreModel extends HiveObject {
+class ScoreModel  {
   final int score;
   final int highScore;
   final DateTime date;
