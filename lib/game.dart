@@ -7,8 +7,6 @@ import 'package:jump_adventure/obstacle.dart';
 import 'package:jump_adventure/player.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'home.dart';
-
 class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
   late Player player;
   late List<Obstacle> obstacles;
@@ -35,6 +33,8 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
   int score = 0;
   int highScore = 0;
 
+  late SpriteComponent background;
+
   JumpGame({required int initialHighScore}) {
     highScore = initialHighScore;
   }
@@ -47,15 +47,15 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
       maxPlayers: 3,
     );
 
-// 배경 이미지 추가
-    final background = SpriteComponent(
+    // 배경 이미지 초기화
+    background = SpriteComponent(
       sprite: await Sprite.load('background.png'),
       size: size,
       position: Vector2(0, 0),
     );
     add(background);
 
-// 땅 이미지 추가
+    // 땅 이미지 추가
     final ground = SpriteComponent(
       sprite: await Sprite.load('ground.png'),
       size: Vector2(size.x, groundHeight),
@@ -77,8 +77,6 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
     );
     add(scoreText);
 
-
-
     highScoreText = TextComponent(
       text: 'High Score: $highScore',
       position: Vector2(size.x - 200, 20),
@@ -91,10 +89,6 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
       ),
     );
     add(highScoreText);
-
-
-
-
 
     // 플레이어 초기화
     player = Player(
@@ -113,7 +107,7 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
   }
 
   @override
-  void update(double dt) {
+  Future<void> update(double dt) async {
     super.update(dt);
     if (isGameOver) return;
 
@@ -143,27 +137,14 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
     }
 
     // 점수에 따라 장애물 속도 및 크기 변경
-    obstacleSpeed = 200.0 + (score * 10);  // Smoothly increase speed
-    obstacleSize = 50.0 + (score * 5);     // Increase width with score
-    obstacleHeight = 50.0 + (score * 5);   // Increase height with score
+    obstacleSpeed = 200.0 + (score * 10); // Smoothly increase speed
+    obstacleSize = 50.0 + (score * 5); // Increase width with score
+    obstacleHeight = 50.0 + (score * 5); // Increase height with score
 
-    // If speed has changed, display "Speed Up!" message for 1.5 seconds
-    if (score >= 2 && score < 5 && !speedUpVisible) {
-      speedUpVisible = true;
-      addSpeedUpMessage();
-
-      if(score == 5){
-        speedUpVisible = false;
-      }
-
-    }
-
-    if (speedUpVisible) {
-      speedUpTimer += dt;
-      if (speedUpTimer >= 1.5) {
-        speedUpVisible = false;
-        speedUpTimer = 0;
-      }
+    // 스코어가 10점 이상일 때 배경 변경
+    if (score >= 8 &&
+        background.sprite != await Sprite.load('dark_back.png')) {
+      background.sprite = await Sprite.load('dark_back.png');
     }
 
     // 충돌 체크
@@ -186,7 +167,7 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
     final obstacleY = size.y - groundHeight - 30 - (obstacleHeight - 40) / 2;
 
     final obstacle = Obstacle(
-      position: Vector2(size.x, obstacleY ),
+      position: Vector2(size.x, obstacleY),
       size: Vector2(obstacleSize, obstacleHeight),
     );
     add(obstacle);
@@ -220,7 +201,6 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
         ),
       );
     } else {
-
       // speedUp 제거
       speedUpVisible = false;
 
