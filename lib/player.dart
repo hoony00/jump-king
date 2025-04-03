@@ -33,9 +33,13 @@ class Player extends PositionComponent with CollisionCallbacks {
   void jump() {
     print("Jump called, isJumping: $isJumping, isLying: $isLying");
     if (!isJumping && position.y >= groundY) {
-      print("Starting jump from y: ${position.y}");
-      verticalVelocity = -jumpForce;
+
+      // 앉아있을 때 점프력이 2배로 증가
+      double effectiveJumpForce = isLying ? -jumpForce * 1.3 : -jumpForce;
+
+      verticalVelocity = effectiveJumpForce;
       isJumping = true;
+
       if (isLying) {
         standUp();
       }
