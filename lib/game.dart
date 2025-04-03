@@ -7,6 +7,8 @@ import 'package:jump_adventure/obstacle.dart';
 import 'package:jump_adventure/player.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'home.dart';
+
 class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
   late Player player;
   late List<Obstacle> obstacles;
@@ -45,19 +47,19 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
       maxPlayers: 3,
     );
 
-    // 배경 설정
-    add(
-      RectangleComponent(
-        size: size,
-        paint: Paint()..color = const Color(0xFF87CEEB),
-      ),
+// 배경 이미지 추가
+    final background = SpriteComponent(
+      sprite: await Sprite.load('background.png'),
+      size: size,
+      position: Vector2(0, 0),
     );
+    add(background);
 
-    // 땅 추가
-    final ground = RectangleComponent(
+// 땅 이미지 추가
+    final ground = SpriteComponent(
+      sprite: await Sprite.load('ground.png'),
       size: Vector2(size.x, groundHeight),
       position: Vector2(0, size.y - groundHeight),
-      paint: Paint()..color = const Color(0xFF8B4513),
     );
     add(ground);
 
@@ -74,6 +76,8 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
       ),
     );
     add(scoreText);
+
+
 
     highScoreText = TextComponent(
       text: 'High Score: $highScore',
@@ -182,7 +186,7 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
     final obstacleY = size.y - groundHeight - 30 - (obstacleHeight - 40) / 2;
 
     final obstacle = Obstacle(
-      position: Vector2(size.x, obstacleY),
+      position: Vector2(size.x, obstacleY ),
       size: Vector2(obstacleSize, obstacleHeight),
     );
     add(obstacle);
