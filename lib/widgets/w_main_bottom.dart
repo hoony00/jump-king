@@ -17,7 +17,7 @@ class ControlsWidget extends ConsumerWidget {
           // 점프 버튼
           AnimatedButton(
             onPressed: () {
-              print("Jump button pressed");
+              debugPrint("Jump button pressed");
               game.playerJump();
             },
             icon: Icons.keyboard_arrow_up,
@@ -38,7 +38,7 @@ class ControlsWidget extends ConsumerWidget {
           // 엎드리기/일어서기 버튼
           AnimatedButton(
             onPressed: () {
-              print("Slide button pressed");
+              debugPrint("Slide button pressed");
               game.playerLie();
             },
             icon: Icons.keyboard_arrow_down,
