@@ -63,6 +63,14 @@ class JumpGame extends FlameGame with TapDetector, HasCollisionDetection {
     );
     add(ground);
 
+    // 벚꽃
+    final cherry_flower = SpriteComponent(
+      sprite: await Sprite.load('flower_back.png'),
+      size: Vector2(150, 100),
+      position: Vector2(0,  400),
+    );
+    add(cherry_flower);
+
     // 점수 텍스트 초기화
     scoreText = TextComponent(
       text: 'Score: 0',
